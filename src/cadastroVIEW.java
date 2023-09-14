@@ -152,6 +152,8 @@ public class cadastroVIEW extends javax.swing.JFrame {
         }catch(Exception e){
             JOptionPane.showMessageDialog(this, "Ocorreu uma falha:\n" + e.getMessage());
         }
+        cadastroNome.setText("");
+        cadastroValor.setText("");
        
         
         
