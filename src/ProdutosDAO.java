@@ -57,8 +57,42 @@ public class ProdutosDAO {
         }
         return null;
     }
-    
-    
+     public int venderProduto (ProdutosDTO produto) {
+       conn = new conectaDAO().connectDB();
+       int atual;
+       try{ 
+          prep = conn.prepareStatement("UPDATE produtos nome=?, valor=?, status=? WHERE id=?");
+          prep.setString(1, produto.getNome());
+          prep.setInt(2, produto.getValor());
+          prep.setString(3, produto.getStatus());
+          atual = prep.executeUpdate();
+          
+        return atual;
+       }catch (SQLException ex){
+           JOptionPane.showMessageDialog(null, "Erro ao Atualizar" + ex.getMessage());
+           return ex.getErrorCode();
+       } 
+    }
+    public List<ProdutosDTO> listarProdutosVendidos(){
+        conn = new conectaDAO().connectDB();
+        try{
+            prep = this.conn.prepareStatement("SELECT *FROM produtos WHERE status LIKE ?");
+            resultset = prep.executeQuery();
+            listagem = new ArrayList<>();
+            while(resultset.next()){
+                ProdutosDTO produto = new ProdutosDTO();
+                produto.setId(resultset.getInt("id"));
+                produto.setNome(resultset.getString("nome"));
+                produto.setValor(resultset.getInt("valor"));
+                produto.setStatus(resultset.getString("status"));
+                listagem.add(produto);
+            }
+            return listagem;            
+        }catch(SQLException ex){
+             JOptionPane.showMessageDialog(null, "Erro ao cadastrar" + ex.getMessage());
+        }
+        return null;
+    }
     
         
 }
