@@ -19,7 +19,7 @@ public class ProdutosDAO {
     PreparedStatement prep;
     ResultSet resultset;
     ArrayList<ProdutosDTO> listagem = new ArrayList<>();
-    
+    ArrayList<ProdutosDTO> listagemVendidos = new ArrayList<>();
     public int cadastrarProduto (ProdutosDTO produto) {
        conn = new conectaDAO().connectDB();
        int atual;
@@ -76,18 +76,20 @@ public class ProdutosDAO {
     public List<ProdutosDTO> listarProdutosVendidos(){
         conn = new conectaDAO().connectDB();
         try{
-            prep = this.conn.prepareStatement("SELECT *FROM produtos WHERE status LIKE ?");
+            String sql = "SELECT*FROM produtos WHERE status like ?";
+            prep = this.conn.prepareStatement(sql);
+            prep.setString(1, "Vendido");
             resultset = prep.executeQuery();
-            listagem = new ArrayList<>();
+            listagemVendidos = new ArrayList<>();
             while(resultset.next()){
                 ProdutosDTO produto = new ProdutosDTO();
                 produto.setId(resultset.getInt("id"));
                 produto.setNome(resultset.getString("nome"));
                 produto.setValor(resultset.getInt("valor"));
                 produto.setStatus(resultset.getString("status"));
-                listagem.add(produto);
+                listagemVendidos.add(produto);
             }
-            return listagem;            
+            return listagemVendidos;            
         }catch(SQLException ex){
              JOptionPane.showMessageDialog(null, "Erro ao cadastrar" + ex.getMessage());
         }
