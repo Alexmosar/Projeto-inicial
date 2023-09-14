@@ -13,12 +13,29 @@ import javax.swing.table.DefaultTableModel;
  */
 public class listagemVIEW extends javax.swing.JFrame {
 
-    /**
-     * Creates new form listagemVIEW
-     */
+    public void preencherTabela (ArrayList<ProdutosDTO> listarProdutos){
+        String colunns[]= {"ID", "Nome", "Valor", "Status"};
+        String dados [][] = new String [listarProdutos.size()][colunns.length];
+        int i=0;
+        for(ProdutosDTO item: listarProdutos){
+        dados [i] = new String[]{
+            String.valueOf(item.getId()),
+            item.getNome(),
+            String.valueOf(item.getValor()),
+            item.getStatus()
+        };
+        i++;
+    }
+        DefaultTableModel model = new DefaultTableModel(dados, colunns);
+        listaProdutos.setModel(model);
+    }
     public listagemVIEW() {
         initComponents();
-        listarProdutos();
+        //listarProdutos();
+        ProdutosDAO produtosDAO = new ProdutosDAO();
+        ArrayList<ProdutosDTO> listarProdutos = produtosDAO.listarProdutos();
+        
+        preencherTabela(listarProdutos);
     }
 
     /**
@@ -141,7 +158,7 @@ public class listagemVIEW extends javax.swing.JFrame {
         ProdutosDAO produtosdao = new ProdutosDAO();
         
         //produtosdao.venderProduto(Integer.parseInt(id));
-        listarProdutos();
+        //listarProdutos();
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
@@ -201,7 +218,7 @@ public class listagemVIEW extends javax.swing.JFrame {
     private javax.swing.JTable listaProdutos;
     // End of variables declaration//GEN-END:variables
 
-    private void listarProdutos(){
+   /* private void listarProdutos(){
         try {
             ProdutosDAO produtosdao = new ProdutosDAO();
             
@@ -221,5 +238,5 @@ public class listagemVIEW extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     
-    }
+    }*/
 }
