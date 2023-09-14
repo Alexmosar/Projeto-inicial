@@ -1,6 +1,7 @@
 
 
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -126,12 +127,26 @@ public class listagemVIEW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-        String id = id_produto_venda.getText();
+        ProdutosDTO produto = new ProdutosDTO();
+        int id = Integer.parseInt(id_produto_venda.getText());
+        String status = "Vendido";
+        try{
+            produto.setId(id);
+            produto.setStatus(status);
+            ProdutosDAO produtosdao = new ProdutosDAO();
+            produtosdao.venderProduto(produto);
+            listarProdutos();
+            JOptionPane.showMessageDialog(null, "Produto Vendido");
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Ocorreu uma falha:\n" + e.getMessage());
+        }
         
-        ProdutosDAO produtosdao = new ProdutosDAO();
+        
+            
+        //ProdutosDAO produtosdao = new ProdutosDAO();
         
         //produtosdao.venderProduto(Integer.parseInt(id));
-        listarProdutos();
+        //listarProdutos();
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed

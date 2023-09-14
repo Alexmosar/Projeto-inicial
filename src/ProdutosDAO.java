@@ -61,15 +61,15 @@ public class ProdutosDAO {
        conn = new conectaDAO().connectDB();
        int atual;
        try{ 
-          prep = conn.prepareStatement("UPDATE produtos nome=?, valor=?, status=? WHERE id=?");
-          prep.setString(1, produto.getNome());
-          prep.setInt(2, produto.getValor());
-          prep.setString(3, produto.getStatus());
+           String sql = "update produtos SET status=? where Id = ?";
+          prep = conn.prepareStatement(sql);
+          prep.setString(1, produto.getStatus());
+          prep.setInt(2, produto.getId());
           atual = prep.executeUpdate();
           
         return atual;
        }catch (SQLException ex){
-           JOptionPane.showMessageDialog(null, "Erro ao Atualizar" + ex.getMessage());
+           JOptionPane.showMessageDialog(null, "Erro ao cadastrar" + ex.getMessage());
            return ex.getErrorCode();
        } 
     }
