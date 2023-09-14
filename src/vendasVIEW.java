@@ -119,11 +119,9 @@ public class vendasVIEW extends javax.swing.JFrame {
 
 private void listarProdutosVendidos(){
         
-            ProdutosDAO produtosdao = new ProdutosDAO();
-            List<ProdutosDTO> listagemVendidos = produtosdao.listarProdutosVendidos();
-            DefaultTableModel model = (DefaultTableModel) listaProdutosVendidos.getModel();
-          
-            
+        ProdutosDAO produtosdao = new ProdutosDAO();
+        List<ProdutosDTO> listagemVendidos = produtosdao.listarProdutosVendidos();
+        DefaultTableModel model = (DefaultTableModel) listaProdutosVendidos.getModel();
           
         for(ProdutosDTO item: listagemVendidos){
         Object[] obj = new Object[]{
